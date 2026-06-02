@@ -1,32 +1,65 @@
 interface User {
+  id: number;
   login: string;
-  password: string;
 }
 
 interface Product {
-  id: number;
-  data: string[];
+  title: string;
 }
 
 interface ApiResponse<T> {
-  status: "success" | "error";
-  result: T;
+  data: T;
 }
 
-// =======
+// =========================================
 
-const user: ApiResponse<User> = {
-  status: "success",
-  result: {
-    login: "alex",
-    password: "123",
-  },
+// тип с подтипом в дженерике
+// const response: ApiResponse<User> = {
+//   data: {
+//     id: 14,
+//     login: "alex",
+//   },
+// };
+
+// =========================================
+
+// дженерики в функциях
+function fetch<T>(arg: T) {
+  const response: ApiResponse<T> = { data: arg };
+
+  return response;
+}
+
+// вызов
+const myUser = fetch<User>({
+  id: 123,
+  login: "bob",
+});
+
+// =========================================
+
+// условные типы
+type isArray<T> = T extends any[] ? true : false;
+
+const data1: isArray<string> = false;
+const data2: isArray<string[]> = true;
+
+// --------------------
+
+type User1 = {
+  id: number;
+  login: string;
 };
 
-const product: ApiResponse<Product> = {
-  status: "success",
-  result: {
-    id: 33,
-    data: ["hello", "wtf"],
-  },
+type Error1 = {
+  message: string;
 };
+
+type loginUser<T> = T extends User1 ? User1 : Error1;
+
+const userData: loginUser<User1> = {
+  id: 123,
+  login: "qwe",
+};
+
+const errorData: loginUser<123> = { message: "login failed" };
