@@ -2,10 +2,11 @@ type figure =
   | { type: "circle"; radius: number }
   | { type: "square"; side: number };
 
+// if (figure.type === "circle") { figure.radius } // type гарантирует сужение
+
 // ===========================
 
 function calc(arg: figure) {
-  // type гарантирует сужение
   if (arg.type === "circle") {
     return arg.radius / (2 * Math.PI);
   }
@@ -14,4 +15,4 @@ function calc(arg: figure) {
   }
 }
 
-calc({ type: "square", side: 10 });
+console.log(calc({ type: "square", side: 10 })); // 100
