@@ -2,7 +2,7 @@ type figure =
   | { type: "circle"; radius: number }
   | { type: "square"; side: number };
 
-// if (figure.type === "circle") { figure.radius } // type гарантирует сужение
+// if (figure.type === "circle") { figure.radius } // литерал type гарантирует сужение
 
 // ===========================
 
